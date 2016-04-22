@@ -20,8 +20,8 @@
         android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/name"
-        android:layout_below="@+id/address"
         android:hint="name"
+        android:layout_below="@+id/address"
         android:layout_centerHorizontal="true" />
 
     <EditText
@@ -30,10 +30,9 @@
         android:inputType="textPostalAddress"
         android:ems="10"
         android:id="@+id/address"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:hint="address"
-        android:layout_marginTop="185dp" />
+        android:layout_below="@+id/details"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="match_parent"
@@ -41,11 +40,11 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="My Trip Details:"
         android:id="@+id/textView4"
-        android:layout_above="@+id/name"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="92dp"
         android:textAlignment="center"
-        android:background="#40dfdfdf" />
+        android:background="#40dfdfdf"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/imageView4"
+        android:layout_alignStart="@+id/imageView4" />
 
     <Button
         android:layout_width="wrap_content"
@@ -53,8 +52,7 @@
         android:text="Ping It"
         android:id="@+id/pingLocationButton"
         android:layout_below="@+id/name"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="51dp" />
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -63,7 +61,31 @@
         android:ems="10"
         android:id="@+id/details"
         android:hint="details"
-        android:layout_below="@+id/name"
-        android:layout_alignLeft="@+id/name"
-        android:layout_alignStart="@+id/name" />
+        android:layout_below="@+id/textView4"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="29dp" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/favoritesList"
+        android:layout_below="@+id/pingLocationButton"
+        android:layout_alignLeft="@+id/imageView4"
+        android:layout_alignStart="@+id/imageView4"
+        android:layout_marginTop="37dp"
+        android:scrollingCache="true"
+        android:textAlignment="center" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Favorite Places"
+        android:id="@+id/textView8"
+        android:textSize="22sp"
+        android:textAlignment="center"
+        android:background="#40dfdfdf"
+        android:layout_below="@+id/pingLocationButton"
+        android:layout_alignRight="@+id/imageView4"
+        android:layout_alignEnd="@+id/imageView4" />
 </RelativeLayout>

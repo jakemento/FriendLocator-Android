@@ -4,8 +4,13 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -15,6 +20,8 @@ public class MyLocationActivity extends AppCompatActivity implements View.OnClic
     @Bind(R.id.name) EditText mName;
     @Bind(R.id.address) EditText mAddress;
     @Bind(R.id.details) EditText mDetails;
+    @Bind(R.id.favoritesList) ListView mFavoritesList;
+    private String[] favoritePlaces = new String[] {"Pioneer Place", "Washington Square Mall", "Powell's Books", "Ground Kontrol", "Coco Donuts", "Home", "Parent's Place", "Bridgeport Mall", "Pittock Mansion", "Epicodus Building", "Alder St. Food Carts"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +30,16 @@ public class MyLocationActivity extends AppCompatActivity implements View.OnClic
         ButterKnife.bind(this);
 
         mPingLocationButton.setOnClickListener(this);
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, favoritePlaces);
+        mFavoritesList.setAdapter(adapter);
+
+        mFavoritesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String favoritePlace = ((TextView)view).getText().toString();
+                Toast.makeText(MyLocationActivity.this, favoritePlace, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
