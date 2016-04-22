@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">FriendLocator</string>
+    <string-array name="friends_list">
+        <item>John</item>'
+        <item>Paul</item>
+        <item>George</item>
+        <item>Ringo</item>
+    </string-array>
+    <string name="title_activity_specific_friend">SpecificFriendActivity</string>
 </resources>

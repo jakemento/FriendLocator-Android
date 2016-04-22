@@ -26,5 +26,27 @@
         android:layout_alignStart="@+id/imageView2"
         android:layout_marginTop="29dp"
         android:background="#40cecece"
-        android:textSize="30sp" />
+        android:textSize="22sp"
+        android:textColor="#242521" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:id="@+id/friendSpinner"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:entries="@array/friends_list"
+        android:background="@android:drawable/btn_dropdown"
+
+
+    />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/friendSpinner"
+        android:layout_below="@+id/friendSpinner"
+        android:text="find friend"
+        android:id="@+id/findSpecificFriendButton" />
 </RelativeLayout>
