@@ -18,19 +18,33 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/textView2"
+        android:height="50dp"
+        android:background="#4d979797"
+        android:layout_alignTop="@+id/findFriendsButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Friend Locator"
         android:id="@+id/textView"
         android:textAlignment="center"
         android:textColor="#242521"
-        android:background="#f8e9bf"
+        android:background="#bff8e9bf"
         android:layout_marginTop="198dp"
         android:backgroundTint="#b2a99d"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         style="`"
-        android:singleLine="false" />
+        android:singleLine="false"
+        android:autoText="true" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -42,4 +56,27 @@
         android:layout_alignTop="@+id/textView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Find Friends"
+        android:id="@+id/findFriendsButton"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/question"
+        android:layout_toEndOf="@+id/question"
+        android:layout_marginBottom="119dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ping Location"
+        android:id="@+id/pingLocationButton"
+        android:layout_alignTop="@+id/findFriendsButton"
+        android:layout_toRightOf="@+id/findFriendsButton"
+        android:layout_toEndOf="@+id/findFriendsButton"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp" />
+
+
 </RelativeLayout>
