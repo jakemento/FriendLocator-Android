@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -12,6 +13,7 @@ import butterknife.ButterKnife;
 public class FindFriendsActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Bind(R.id.findSpecificFriendButton) Button mFindSpecificFriend;
+
 
 
     @Override
@@ -27,7 +29,9 @@ public class FindFriendsActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         if (v == mFindSpecificFriend) {
+//            String itemStr = mySpinner.getSelectedItem().toString();
             Intent specificFriendIntent = new Intent (FindFriendsActivity.this, SpecificFriendActivity.class);
+//            specificFriendIntent.putExtra("data", itemStr);
             startActivity(specificFriendIntent);
         }
     }

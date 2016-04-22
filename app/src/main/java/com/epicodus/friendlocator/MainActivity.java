@@ -15,6 +15,7 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     @Bind(R.id.question) ImageView mQuestionButton;
     @Bind(R.id.findFriendsButton) Button mFindFriendsButton;
+    @Bind(R.id.pingLocationButton) Button mPingLocationButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mQuestionButton.setOnClickListener(this);
         mFindFriendsButton.setOnClickListener(this);
+        mPingLocationButton.setOnClickListener(this);
     }
             @Override
             public void onClick(View v) {
@@ -35,6 +37,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if( v == mFindFriendsButton) {
                     Intent findFriendsIntent = new Intent(MainActivity.this, FindFriendsActivity.class);
                     startActivity(findFriendsIntent);
+                }
+
+                if (v == mPingLocationButton) {
+                    Intent myLocationIntent = new Intent (MainActivity.this, MyLocationActivity.class);
+                    startActivity(myLocationIntent);
                 }
         };
 
