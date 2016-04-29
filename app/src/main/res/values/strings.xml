@@ -7,4 +7,6 @@
         <item>Ringo</item>
     </string-array>
     <string name="title_activity_specific_friend">SpecificFriendActivity</string>
+
+    <string name="google_app_id">1048188996993-j5obiiijfl2k1so2aem48b26o5cm5fhk.apps.googleusercontent.com</string>
 </resources>

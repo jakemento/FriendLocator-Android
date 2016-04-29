@@ -1,11 +1,12 @@
-package com.epicodus.friendlocator;
+package com.epicodus.friendlocator.ui;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Spinner;
+
+import com.epicodus.friendlocator.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
