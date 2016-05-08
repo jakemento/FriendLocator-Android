@@ -50,20 +50,6 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
         setContentView(R.layout.activity_location_details);
         ButterKnife.bind(this);
 
-//        GoogleApiClient mGoogleApiClient = new GoogleApiClient.Builder(this)
-//                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
-//                .addApi(Drive.API)
-//                .addScope(Drive.SCOPE_FILE)
-//                .build();
-//
-//        if (mGoogleApiClient == null) {
-//            mGoogleApiClient == new GoogleApiClient.Builder(this)
-//                    .addConnectionCallbacks(this)
-//                    .addOnConnectionFailedListener(this)
-//                    .addApi(LocationServices.API)
-//                    .build();
-//        }
-
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -76,7 +62,7 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
         mAddressTextView.setText(address);
         mNameTextView.setText(name);
         mDetailsTextView.setText(details);
-        point = CameraUpdateFactory.newLatLng(new LatLng(45, -122));
+        point = CameraUpdateFactory.newLatLng(new LatLng(45.5231, -122.6765));
 
 
     }
@@ -85,7 +71,7 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
     public void onMapReady(GoogleMap map) {
         map.moveCamera(point);
         map.addMarker(new MarkerOptions()
-                .position(new LatLng(45, -122)));
+                .position(new LatLng(45.5231, -122.6765)));
 
     }
 }
