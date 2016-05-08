@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.epicodus.friendlocator.R;
-import com.epicodus.friendlocator.models.CreateAccountActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
