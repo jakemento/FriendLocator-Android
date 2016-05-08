@@ -6,5 +6,7 @@ package com.epicodus.friendlocator;
 public class Constants {
 
     public static final String MAPS_API_KEY = BuildConfig.MAPS_API_KEY;
-    
+    public static final String FIREBASE_URL = BuildConfig.FIREBASE_ROOT_URL;
+
+
 }
