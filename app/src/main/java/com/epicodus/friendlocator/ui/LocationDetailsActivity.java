@@ -87,10 +87,10 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
     public void onMapReady(GoogleMap map) {
         mMap = map;
         mUiSettings = mMap.getUiSettings();
-        map.moveCamera(point);
-        map.setBuildingsEnabled(true);
+        mMap.moveCamera(point);
+        mMap.setBuildingsEnabled(true);
         mUiSettings.setZoomControlsEnabled(true);
-        map.animateCamera(CameraUpdateFactory.zoomTo(14), 1000, null);
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(12), 1000, null);
 
         inputLocation = mLocation.getText().toString();
         if (inputLocation.matches("")) {

@@ -21,6 +21,7 @@ public class MyLocationActivity extends AppCompatActivity implements View.OnClic
     @Bind(R.id.goToMapButton) Button mGoToMapButton;
     @Bind(R.id.address) EditText mAddress;
     @Bind(R.id.favoritesList) ListView mFavoritesList;
+    @Bind(R.id.saveToFavoritesButton) Button mSaveToFavorites;
     private String[] favoritePlaces = new String[] {"Pioneer Place", "Washington Square Mall", "Powell's Books", "Ground Kontrol", "Coco Donuts", "Bridgeport Mall", "Pittock Mansion", "Epicodus", "Alder St. Food Carts"};
 
     @Override
@@ -53,6 +54,12 @@ public class MyLocationActivity extends AppCompatActivity implements View.OnClic
             Intent nameAddressIntent = new Intent(MyLocationActivity.this, LocationDetailsActivity.class);
             nameAddressIntent.putExtra("inputAddress", inputAddress);
             startActivity(nameAddressIntent);
+
+//            if (v == mSaveToFavorites) {
+//                String inputAddress2 = mAddress.getText().toString();
+//                favoritePlaces.add(inputAddress2);
+
+            }
         }
 
 
