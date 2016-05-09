@@ -83,11 +83,16 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
     @Override
     public void onMapReady(GoogleMap map) {
         map.moveCamera(point);
-        map.addMarker(new MarkerOptions()
-                .position(new LatLng(45.5231, -122.6765)));
         map.setBuildingsEnabled(true);
         map.animateCamera(CameraUpdateFactory.zoomTo(14), 1000, null);
         mMap = map;
+
+        if (mLocation == null) {
+
+        }
+        else {
+            mGoButton.performClick();
+        }
     }
 
     private void goToLocation(double lat, double lng, float zoom) {
