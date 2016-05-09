@@ -36,10 +36,11 @@ import static com.google.android.gms.maps.CameraUpdateFactory.*;
 
 public class LocationDetailsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    GoogleMap mMap;
-    private SupportMapFragment fragment;
+    private GoogleMap mMap;
+    private MapFragment fragment;
     private CameraUpdate point;
     private static final float DEFAULTZOOM = 15;
+    private CameraUpdate update;
 
 
 
@@ -59,7 +60,7 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
         setContentView(R.layout.activity_location_details);
         ButterKnife.bind(this);
 
-        MapFragment mapFragment = (MapFragment) getFragmentManager()
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
@@ -72,20 +73,24 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
         mDetailsTextView.setText(details);
         point = CameraUpdateFactory.newLatLng(new LatLng(45.5231, -122.6765));
 
+
     }
 
     @Override
-    public void onMapReady(GoogleMap mMap) {
-        mMap.moveCamera(point);
-        mMap.addMarker(new MarkerOptions()
+    public void onMapReady(GoogleMap map) {
+        map.moveCamera(point);
+        map.addMarker(new MarkerOptions()
                 .position(new LatLng(45.5231, -122.6765)));
         CameraUpdateFactory.zoomIn();
-        mMap.setBuildingsEnabled(true);
+        map.setBuildingsEnabled(true);
+        mMap = map;
+
+
     }
 
     private void goToLocation(double lat, double lng, float zoom) {
-        LatLng ll = new LatLng(lat, lng);
-        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(ll, zoom);
+        LatLng LatLong = new LatLng(lat, lng);
+        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(LatLong, zoom);
         mMap.moveCamera(update);
     }
 
@@ -102,6 +107,8 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
         double lat = add.getLatitude();
         double lng = add.getLongitude();
 
+
         goToLocation(lat, lng, DEFAULTZOOM);
     }
+
 }
