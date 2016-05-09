@@ -90,7 +90,7 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
         mMap.moveCamera(point);
         mMap.setBuildingsEnabled(true);
         mUiSettings.setZoomControlsEnabled(true);
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(12), 1000, null);
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(14), 1000, null);
 
         inputLocation = mLocation.getText().toString();
         if (inputLocation.matches("")) {

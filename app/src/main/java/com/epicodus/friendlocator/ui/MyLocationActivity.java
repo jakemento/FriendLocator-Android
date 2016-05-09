@@ -14,6 +14,10 @@ import android.widget.Toast;
 
 import com.epicodus.friendlocator.R;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -22,13 +26,16 @@ public class MyLocationActivity extends AppCompatActivity implements View.OnClic
     @Bind(R.id.address) EditText mAddress;
     @Bind(R.id.favoritesList) ListView mFavoritesList;
     @Bind(R.id.saveToFavoritesButton) Button mSaveToFavorites;
-    private String[] favoritePlaces = new String[] {"Pioneer Place", "Washington Square Mall", "Powell's Books", "Ground Kontrol", "Coco Donuts", "Bridgeport Mall", "Pittock Mansion", "Epicodus", "Alder St. Food Carts"};
+    private ArrayList<String> favoritePlaces = new ArrayList<String>();
+       String [] places = {"Washington Square Mall", "Powell's Books", "Ground Kontrol", "Coco Donuts", "Bridgeport Mall", "Pittock Mansion", "Epicodus", "Alder St. Food Carts", "Pioneer Place"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_location);
         ButterKnife.bind(this);
+        favoritePlaces.addAll(Arrays.asList(places));
+
 
         mGoToMapButton.setOnClickListener(this);
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, favoritePlaces);
@@ -65,4 +72,3 @@ public class MyLocationActivity extends AppCompatActivity implements View.OnClic
 
 
     }
-}
