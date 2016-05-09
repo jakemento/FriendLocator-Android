@@ -42,6 +42,7 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
     private CameraUpdate point;
     private static final float DEFAULTZOOM = 15;
     private CameraUpdate update;
+    private String inputLocation;
 
 
 
@@ -87,11 +88,12 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
         map.animateCamera(CameraUpdateFactory.zoomTo(14), 1000, null);
         mMap = map;
 
-        if (mLocation == null) {
-
+        inputLocation = mLocation.getText().toString();
+        if (inputLocation.matches("")) {
         }
         else {
             mGoButton.performClick();
+
         }
     }
 
