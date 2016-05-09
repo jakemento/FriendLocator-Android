@@ -85,8 +85,8 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
         map.moveCamera(point);
         map.addMarker(new MarkerOptions()
                 .position(new LatLng(45.5231, -122.6765)));
-        CameraUpdateFactory.zoomIn();
         map.setBuildingsEnabled(true);
+        map.animateCamera(CameraUpdateFactory.zoomTo(14), 1000, null);
         mMap = map;
     }
 
