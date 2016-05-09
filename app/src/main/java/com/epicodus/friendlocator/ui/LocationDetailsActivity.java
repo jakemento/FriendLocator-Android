@@ -23,6 +23,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -43,6 +44,7 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
     private static final float DEFAULTZOOM = 15;
     private CameraUpdate update;
     private String inputLocation;
+    private UiSettings mUiSettings;
 
 
 
@@ -83,10 +85,12 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
 
     @Override
     public void onMapReady(GoogleMap map) {
+        mMap = map;
+        mUiSettings = mMap.getUiSettings();
         map.moveCamera(point);
         map.setBuildingsEnabled(true);
+        mUiSettings.setZoomControlsEnabled(true);
         map.animateCamera(CameraUpdateFactory.zoomTo(14), 1000, null);
-        mMap = map;
 
         inputLocation = mLocation.getText().toString();
         if (inputLocation.matches("")) {
