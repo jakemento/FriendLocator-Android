@@ -107,6 +107,9 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
         double lat = add.getLatitude();
         double lng = add.getLongitude();
 
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(lat, lng)));
+
 
         goToLocation(lat, lng, DEFAULTZOOM);
     }
