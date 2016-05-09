@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,6 +53,7 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
     @Bind(R.id.nameTextView) TextView mNameTextView;
     @Bind(R.id.detailsTextView) TextView mDetailsTextView;
     @Bind(R.id.location) EditText mLocation;
+    @Bind(R.id.goButton) Button mGoButton;
 
 
     @Override
@@ -65,6 +67,7 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
         mapFragment.getMapAsync(this);
 
         Intent intent = getIntent();
+        String favoritePlace = intent.getStringExtra("favoritePlace");
         String name = intent.getStringExtra("inputName");
         String address = intent.getStringExtra("inputAddress");
         String details = intent.getStringExtra("inputDetails");
@@ -72,8 +75,9 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
         mNameTextView.setText(name);
         mDetailsTextView.setText(details);
         point = CameraUpdateFactory.newLatLng(new LatLng(45.5231, -122.6765));
-
-
+        if (favoritePlace != null) {
+            mLocation.setText(favoritePlace);
+        }
     }
 
     @Override
@@ -84,8 +88,6 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
         CameraUpdateFactory.zoomIn();
         map.setBuildingsEnabled(true);
         mMap = map;
-
-
     }
 
     private void goToLocation(double lat, double lng, float zoom) {

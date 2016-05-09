@@ -39,7 +39,11 @@ public class MyLocationActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String favoritePlace = ((TextView)view).getText().toString();
+                Intent intent = new Intent(MyLocationActivity.this, LocationDetailsActivity.class);
+                intent.putExtra("favoritePlace", favoritePlace);
+                startActivity(intent);
                 Toast.makeText(MyLocationActivity.this, favoritePlace, Toast.LENGTH_SHORT).show();
+
             }
         });
     }
