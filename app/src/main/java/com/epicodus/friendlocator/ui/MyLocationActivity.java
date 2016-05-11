@@ -37,7 +37,7 @@ public class MyLocationActivity extends AppCompatActivity implements View.OnClic
     @Bind(R.id.favoritesList) ListView mFavoritesList;
     @Bind(R.id.saveToFavoritesButton) Button mSaveToFavorites;
     private ArrayList<String> favoritePlaces = new ArrayList<String>();
-       String [] places = {"Washington Square Mall", "Powell's Books", "Ground Kontrol", "Coco Donuts", "Bridgeport Mall", "Pittock Mansion", "Epicodus", "Alder St. Food Carts", "Pioneer Place"};
+//       String [] places = {"Washington Square Mall", "Powell's Books", "Ground Kontrol", "Coco Donuts", "Bridgeport Mall", "Pittock Mansion", "Epicodus", "Alder St. Food Carts", "Pioneer Place"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

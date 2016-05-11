@@ -11,14 +11,20 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.epicodus.friendlocator.Constants;
 import com.epicodus.friendlocator.R;
+import com.epicodus.friendlocator.models.Location;
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -32,6 +38,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -51,6 +58,9 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
     @Bind(R.id.saveButton) Button mSaveButton;
     @Bind(R.id.location) EditText mLocation;
     @Bind(R.id.goButton) Button mGoButton;
+    private Firebase mSavedLocationRef;
+    private ArrayList<String> favoritePlaces = new ArrayList<String>();
+
 
 
 
@@ -69,6 +79,9 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
         setContentView(R.layout.activity_location_details);
         ButterKnife.bind(this);
         mSaveButton.setOnClickListener(this);
+        mSavedLocationRef = new Firebase(Constants.FIREBASE_URL_SAVED_LOCATION);
+
+        Firebase.setAndroidContext(this);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -89,8 +102,10 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
     @Override
         public void onClick(View v ) {
         if (v == mSaveButton) {
-            String location = mLocation.getText().toString();
-            saveLocationToFirebase(location);
+            addData(mLocation.getText().toString());
+
+
+
             Toast notifySaved = Toast.makeText(getApplicationContext(), "Location Saved!", Toast.LENGTH_SHORT);
             notifySaved.setGravity(Gravity.RELATIVE_HORIZONTAL_GRAVITY_MASK| Gravity.CENTER_HORIZONTAL, 0, 0);
             notifySaved.show();
@@ -145,4 +160,11 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
         goToLocation(lat, lng, DEFAULTZOOM);
     }
 
+
+    private void addData(String address) {
+        Location location = new Location();
+        location.setAddress(address);
+
+        mSavedLocationRef.child("savedLocation").push().setValue(location);
+    }
 }
