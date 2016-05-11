@@ -3,6 +3,7 @@ package com.epicodus.friendlocator.ui;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,7 +15,10 @@ import android.widget.Toast;
 
 import com.epicodus.friendlocator.Constants;
 import com.epicodus.friendlocator.R;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,6 +28,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MyLocationActivity extends AppCompatActivity implements View.OnClickListener  {
+    private Firebase mSavedLocationRef;
+
     @Bind(R.id.goToMapButton) Button mGoToMapButton;
     @Bind(R.id.address) EditText mAddress;
     @Bind(R.id.favoritesList) ListView mFavoritesList;
@@ -37,6 +43,20 @@ public class MyLocationActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_my_location);
         ButterKnife.bind(this);
         favoritePlaces.addAll(Arrays.asList(places));
+        mSavedLocationRef = new Firebase(Constants.FIREBASE_URL_SAVED_LOCATION);
+
+        mSavedLocationRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String locations = dataSnapshot.getValue().toString();
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
 
 
         mGoToMapButton.setOnClickListener(this);
@@ -70,6 +90,10 @@ public class MyLocationActivity extends AppCompatActivity implements View.OnClic
             if (v == mSaveToFavorites) {
                 String location = mAddress.getText().toString();
                 saveLocationToFirebase(location);
+                Toast notifySaved = Toast.makeText(getApplicationContext(), "Location Saved!", Toast.LENGTH_SHORT);
+                notifySaved.setGravity(Gravity.RELATIVE_HORIZONTAL_GRAVITY_MASK| Gravity.CENTER_HORIZONTAL, 0, 0);
+                notifySaved.show();
+
 
             }
         }
