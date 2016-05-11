@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.epicodus.friendlocator.Constants;
 import com.epicodus.friendlocator.R;
+import com.epicodus.friendlocator.models.Location;
+import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -42,28 +44,31 @@ public class MyLocationActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_location);
         ButterKnife.bind(this);
-        favoritePlaces.addAll(Arrays.asList(places));
+//        favoritePlaces.addAll(Arrays.asList(places));
         mSavedLocationRef = new Firebase(Constants.FIREBASE_URL_SAVED_LOCATION);
 
-        mSavedLocationRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String locations = dataSnapshot.getValue().toString();
+        this.retrieveData();
+        Firebase.setAndroidContext(this);
 
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
+//        mSavedLocationRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                String locations = dataSnapshot.getValue().toString();
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(FirebaseError firebaseError) {
+//
+//            }
+//        });
 
 
         mGoToMapButton.setOnClickListener(this);
         mSaveToFavorites.setOnClickListener(this);
 
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, favoritePlaces);
-        mFavoritesList.setAdapter(adapter);
+//        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, favoritePlaces);
+//        mFavoritesList.setAdapter(adapter);
 
         mFavoritesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -88,8 +93,12 @@ public class MyLocationActivity extends AppCompatActivity implements View.OnClic
         }
 
             if (v == mSaveToFavorites) {
-                String location = mAddress.getText().toString();
-                saveLocationToFirebase(location);
+//                String location = mAddress.getText().toString();
+//                saveLocationToFirebase(location);
+
+                addData(mAddress.getText().toString());
+
+
                 Toast notifySaved = Toast.makeText(getApplicationContext(), "Location Saved!", Toast.LENGTH_SHORT);
                 notifySaved.setGravity(Gravity.RELATIVE_HORIZONTAL_GRAVITY_MASK| Gravity.CENTER_HORIZONTAL, 0, 0);
                 notifySaved.show();
@@ -97,8 +106,61 @@ public class MyLocationActivity extends AppCompatActivity implements View.OnClic
 
             }
         }
-        public void saveLocationToFirebase(String location) {
-            Firebase savedLocationRef = new Firebase(Constants.FIREBASE_URL_SAVED_LOCATION);
-            savedLocationRef.push().setValue(location);
+//        public void saveLocationToFirebase(String location) {
+//            Firebase savedLocationRef = new Firebase(Constants.FIREBASE_URL_SAVED_LOCATION);
+//            savedLocationRef.push().setValue(location);
+//    }
+
+    private void addData(String address) {
+        Location location = new Location();
+        location.setAddress(address);
+
+        mSavedLocationRef.child("savedLocation").push().setValue(location);
+    }
+
+    private void retrieveData() {
+        mSavedLocationRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                getUpdates(dataSnapshot);
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                getUpdates(dataSnapshot);
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+    }
+
+    private void getUpdates(DataSnapshot ds) {
+        favoritePlaces.clear();
+
+        for(DataSnapshot data : ds.getChildren()) {
+            Location location = new Location();
+            location.setAddress(data.getValue(Location.class).getAddress());
+
+            favoritePlaces.add(location.getAddress());
+        }
+
+        if(favoritePlaces.size()>0) {
+            ArrayAdapter adapter = new ArrayAdapter(MyLocationActivity.this, android.R.layout.simple_list_item_1, favoritePlaces);
+            mFavoritesList.setAdapter(adapter);
+        }
     }
 }
