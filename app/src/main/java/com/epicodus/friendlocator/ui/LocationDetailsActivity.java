@@ -15,7 +15,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.epicodus.friendlocator.Constants;
 import com.epicodus.friendlocator.R;
+import com.firebase.client.Firebase;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -36,7 +38,7 @@ import butterknife.ButterKnife;
 
 import static com.google.android.gms.maps.CameraUpdateFactory.*;
 
-public class LocationDetailsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class LocationDetailsActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener {
 
     private GoogleMap mMap;
     private MapFragment fragment;
@@ -45,6 +47,10 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
     private CameraUpdate update;
     private String inputLocation;
     private UiSettings mUiSettings;
+    @Bind(R.id.saveButton) Button mSaveButton;
+    @Bind(R.id.location) EditText mLocation;
+    @Bind(R.id.goButton) Button mGoButton;
+
 
 
 
@@ -53,10 +59,7 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
     }
 
     @Bind(R.id.addressTextView) TextView mAddressTextView;
-    @Bind(R.id.nameTextView) TextView mNameTextView;
-    @Bind(R.id.detailsTextView) TextView mDetailsTextView;
-    @Bind(R.id.location) EditText mLocation;
-    @Bind(R.id.goButton) Button mGoButton;
+
 
 
     @Override
@@ -64,6 +67,7 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_details);
         ButterKnife.bind(this);
+        mSaveButton.setOnClickListener(this);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -75,12 +79,22 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
         String address = intent.getStringExtra("inputAddress");
         String details = intent.getStringExtra("inputDetails");
         mAddressTextView.setText(address);
-        mNameTextView.setText(name);
-        mDetailsTextView.setText(details);
         point = CameraUpdateFactory.newLatLng(new LatLng(45.5231, -122.6765));
         if (favoritePlace != null) {
             mLocation.setText(favoritePlace);
         }
+    }
+
+    @Override
+        public void onClick(View v ) {
+        if (v == mSaveButton) {
+            String location = mLocation.getText().toString();
+            saveLocationToFirebase(location);
+        }
+    }
+    public void saveLocationToFirebase(String location) {
+        Firebase savedLocationRef = new Firebase(Constants.FIREBASE_URL_SAVED_LOCATION);
+        savedLocationRef.push().setValue(location);
     }
 
     @Override

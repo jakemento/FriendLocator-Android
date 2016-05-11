@@ -75,6 +75,6 @@ public class MyLocationActivity extends AppCompatActivity implements View.OnClic
         }
         public void saveLocationToFirebase(String location) {
             Firebase savedLocationRef = new Firebase(Constants.FIREBASE_URL_SAVED_LOCATION);
-            savedLocationRef.setValue(location);
+            savedLocationRef.push().setValue(location);
     }
 }
