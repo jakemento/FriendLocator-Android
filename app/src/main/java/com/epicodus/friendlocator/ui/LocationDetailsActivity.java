@@ -130,6 +130,7 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
         mMap.moveCamera(point);
         mMap.setBuildingsEnabled(true);
         mUiSettings.setZoomControlsEnabled(true);
+
         mMap.animateCamera(CameraUpdateFactory.zoomTo(14), 1000, null);
 
         inputLocation = mLocation.getText().toString();
@@ -160,8 +161,11 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
         double lat = add.getLatitude();
         double lng = add.getLongitude();
 
-        mMap.addMarker(new MarkerOptions()
-                .position(new LatLng(lat, lng)));
+        Marker marker = mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(lat, lng)).title(mLocation.getText().toString()));
+        marker.showInfoWindow();
+
+
 
 
         goToLocation(lat, lng, DEFAULTZOOM);
