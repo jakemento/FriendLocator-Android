@@ -12,7 +12,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.epicodus.friendlocator.Constants;
 import com.epicodus.friendlocator.R;
+import com.firebase.client.Firebase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,6 +40,8 @@ public class MyLocationActivity extends AppCompatActivity implements View.OnClic
 
 
         mGoToMapButton.setOnClickListener(this);
+        mSaveToFavorites.setOnClickListener(this);
+
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, favoritePlaces);
         mFavoritesList.setAdapter(adapter);
 
@@ -61,14 +65,16 @@ public class MyLocationActivity extends AppCompatActivity implements View.OnClic
             Intent nameAddressIntent = new Intent(MyLocationActivity.this, LocationDetailsActivity.class);
             nameAddressIntent.putExtra("inputAddress", inputAddress);
             startActivity(nameAddressIntent);
+        }
 
-//            if (v == mSaveToFavorites) {
-//                String inputAddress2 = mAddress.getText().toString();
-//                favoritePlaces.add(inputAddress2);
+            if (v == mSaveToFavorites) {
+                String location = mAddress.getText().toString();
+                saveLocationToFirebase(location);
 
             }
         }
-
-
-
+        public void saveLocationToFirebase(String location) {
+            Firebase savedLocationRef = new Firebase(Constants.FIREBASE_URL_SAVED_LOCATION);
+            savedLocationRef.setValue(location);
     }
+}
