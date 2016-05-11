@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.epicodus.friendlocator.Constants;
 import com.epicodus.friendlocator.R;
@@ -59,6 +60,7 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
     @Bind(R.id.saveButton) Button mSaveButton;
     @Bind(R.id.location) EditText mLocation;
     @Bind(R.id.goButton) Button mGoButton;
+    @Bind(R.id.toggleTerrain) ImageView mToggleTerrain;
     private Firebase mSavedLocationRef;
     @Bind(R.id.satelliteView) ImageView mSatelliteView;
     private ArrayList<String> favoritePlaces = new ArrayList<String>();
@@ -82,6 +84,7 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
         ButterKnife.bind(this);
         mSaveButton.setOnClickListener(this);
         mSatelliteView.setOnClickListener(this);
+        mToggleTerrain.setOnClickListener(this);
         mSavedLocationRef = new Firebase(Constants.FIREBASE_URL_SAVED_LOCATION);
 
         Firebase.setAndroidContext(this);
@@ -115,8 +118,10 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
         if(v ==mSatelliteView) {
             mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
         }
+        if(v ==mToggleTerrain) {
+            mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        }
     }
-
 
     @Override
     public void onMapReady(GoogleMap map) {
