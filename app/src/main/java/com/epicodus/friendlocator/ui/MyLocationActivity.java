@@ -37,38 +37,20 @@ public class MyLocationActivity extends AppCompatActivity implements View.OnClic
     @Bind(R.id.favoritesList) ListView mFavoritesList;
     @Bind(R.id.saveToFavoritesButton) Button mSaveToFavorites;
     private ArrayList<String> favoritePlaces = new ArrayList<String>();
-//       String [] places = {"Washington Square Mall", "Powell's Books", "Ground Kontrol", "Coco Donuts", "Bridgeport Mall", "Pittock Mansion", "Epicodus", "Alder St. Food Carts", "Pioneer Place"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_location);
         ButterKnife.bind(this);
-//        favoritePlaces.addAll(Arrays.asList(places));
         mSavedLocationRef = new Firebase(Constants.FIREBASE_URL_SAVED_LOCATION);
 
         this.retrieveData();
         Firebase.setAndroidContext(this);
 
-//        mSavedLocationRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                String locations = dataSnapshot.getValue().toString();
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(FirebaseError firebaseError) {
-//
-//            }
-//        });
-
-
         mGoToMapButton.setOnClickListener(this);
         mSaveToFavorites.setOnClickListener(this);
 
-//        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, favoritePlaces);
-//        mFavoritesList.setAdapter(adapter);
 
         mFavoritesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -93,9 +75,6 @@ public class MyLocationActivity extends AppCompatActivity implements View.OnClic
         }
 
             if (v == mSaveToFavorites) {
-//                String location = mAddress.getText().toString();
-//                saveLocationToFirebase(location);
-
                 addData(mAddress.getText().toString());
 
 
@@ -106,10 +85,6 @@ public class MyLocationActivity extends AppCompatActivity implements View.OnClic
 
             }
         }
-//        public void saveLocationToFirebase(String location) {
-//            Firebase savedLocationRef = new Firebase(Constants.FIREBASE_URL_SAVED_LOCATION);
-//            savedLocationRef.push().setValue(location);
-//    }
 
     private void addData(String address) {
         Location location = new Location();

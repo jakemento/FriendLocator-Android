@@ -111,10 +111,10 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
             notifySaved.show();
         }
     }
-    public void saveLocationToFirebase(String location) {
-        Firebase savedLocationRef = new Firebase(Constants.FIREBASE_URL_SAVED_LOCATION);
-        savedLocationRef.push().setValue(location);
-    }
+//    public void saveLocationToFirebase(String location) {
+//        Firebase savedLocationRef = new Firebase(Constants.FIREBASE_URL_SAVED_LOCATION);
+//        savedLocationRef.push().setValue(location);
+//    }
 
     @Override
     public void onMapReady(GoogleMap map) {
