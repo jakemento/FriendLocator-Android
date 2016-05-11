@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,6 +60,7 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
     @Bind(R.id.location) EditText mLocation;
     @Bind(R.id.goButton) Button mGoButton;
     private Firebase mSavedLocationRef;
+    @Bind(R.id.satelliteView) ImageView mSatelliteView;
     private ArrayList<String> favoritePlaces = new ArrayList<String>();
 
 
@@ -79,6 +81,7 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
         setContentView(R.layout.activity_location_details);
         ButterKnife.bind(this);
         mSaveButton.setOnClickListener(this);
+        mSatelliteView.setOnClickListener(this);
         mSavedLocationRef = new Firebase(Constants.FIREBASE_URL_SAVED_LOCATION);
 
         Firebase.setAndroidContext(this);
@@ -104,17 +107,16 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
         if (v == mSaveButton) {
             addData(mLocation.getText().toString());
 
-
-
             Toast notifySaved = Toast.makeText(getApplicationContext(), "Location Saved!", Toast.LENGTH_SHORT);
             notifySaved.setGravity(Gravity.RELATIVE_HORIZONTAL_GRAVITY_MASK| Gravity.CENTER_HORIZONTAL, 0, 0);
             notifySaved.show();
         }
+
+        if(v ==mSatelliteView) {
+            mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        }
     }
-//    public void saveLocationToFirebase(String location) {
-//        Firebase savedLocationRef = new Firebase(Constants.FIREBASE_URL_SAVED_LOCATION);
-//        savedLocationRef.push().setValue(location);
-//    }
+
 
     @Override
     public void onMapReady(GoogleMap map) {
