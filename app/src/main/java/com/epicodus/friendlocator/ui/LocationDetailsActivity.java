@@ -48,7 +48,8 @@ import butterknife.ButterKnife;
 
 import static com.google.android.gms.maps.CameraUpdateFactory.*;
 
-public class LocationDetailsActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener {
+public class LocationDetailsActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener,
+        GoogleMap.OnMapClickListener {
 
     private GoogleMap mMap;
     private MapFragment fragment;
@@ -61,6 +62,10 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
     @Bind(R.id.location) EditText mLocation;
     @Bind(R.id.goButton) Button mGoButton;
     @Bind(R.id.toggleTerrain) ImageView mToggleTerrain;
+    @Bind(R.id.markerIcon) ImageView mMarkerIcon;
+    double newLat;
+    double newLong;
+    boolean isMapClicked = false;
     private Firebase mSavedLocationRef;
     @Bind(R.id.satelliteView) ImageView mSatelliteView;
     private ArrayList<String> favoritePlaces = new ArrayList<String>();
@@ -79,10 +84,12 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_details);
         ButterKnife.bind(this);
         mSaveButton.setOnClickListener(this);
+        mMarkerIcon.setOnClickListener(this);
         mSatelliteView.setOnClickListener(this);
         mToggleTerrain.setOnClickListener(this);
         mSavedLocationRef = new Firebase(Constants.FIREBASE_URL_SAVED_LOCATION);
@@ -121,14 +128,24 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
         if(v ==mToggleTerrain) {
             mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         }
+        if(v ==mMarkerIcon) {
+//            Marker marker = mMap.addMarker(new MarkerOptions()
+//                    .position(new LatLng(newLat, newLong)));
+//            marker.showInfoWindow();
+//            marker.getTitle();
+            isMapClicked = true;
+        }
     }
 
     @Override
     public void onMapReady(GoogleMap map) {
         mMap = map;
         mUiSettings = mMap.getUiSettings();
+        mMap.setOnMapClickListener(this);
         mMap.moveCamera(point);
+        mMap.setOnMapClickListener(this);
         mMap.setBuildingsEnabled(true);
+
         mUiSettings.setZoomControlsEnabled(true);
 
         mMap.animateCamera(CameraUpdateFactory.zoomTo(14), 1000, null);
@@ -177,5 +194,19 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
         location.setAddress(address);
 
         mSavedLocationRef.child("savedLocation").push().setValue(location);
+    }
+
+    @Override
+    public void onMapClick(LatLng point) {
+        if (isMapClicked == true) {
+            double lat = point.latitude;
+            double lng = point.longitude;
+            newLat = lat;
+            newLong = lng;
+        Marker marker = mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(lat, lng)));
+                marker.showInfoWindow();
+            isMapClicked = false;
+        }
     }
 }

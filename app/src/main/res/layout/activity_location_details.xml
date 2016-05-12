@@ -59,6 +59,16 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/satelliteView"
         android:layout_toEndOf="@+id/satelliteView" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/markerIcon"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/toggleTerrain"
+            android:layout_toEndOf="@+id/toggleTerrain"
+            android:background="@drawable/marker"
+            android:onClick="geoLocate"/>
     </RelativeLayout>
 
 
