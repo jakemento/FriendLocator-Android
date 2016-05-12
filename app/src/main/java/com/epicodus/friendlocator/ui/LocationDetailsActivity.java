@@ -77,9 +77,9 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
 
 
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_location_details, container, false);
-    }
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+//        return inflater.inflate(R.layout.activity_location_details, container, false);
+//    }
 
     @Bind(R.id.addressTextView) TextView mAddressTextView;
 
@@ -105,9 +105,9 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
 
         Intent intent = getIntent();
         String favoritePlace = intent.getStringExtra("favoritePlace");
-        String name = intent.getStringExtra("inputName");
+//        String name = intent.getStringExtra("inputName");
         String address = intent.getStringExtra("inputAddress");
-        String details = intent.getStringExtra("inputDetails");
+//        String details = intent.getStringExtra("inputDetails");
         mAddressTextView.setText(address);
         point = CameraUpdateFactory.newLatLng(new LatLng(45.5231, -122.6765));
         if (favoritePlace != null) {
@@ -132,10 +132,6 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
             mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         }
         if(v ==mMarkerIcon) {
-//            Marker marker = mMap.addMarker(new MarkerOptions()
-//                    .position(new LatLng(newLat, newLong)));
-//            marker.showInfoWindow();
-//            marker.getTitle();
             isMapClicked = true;
         }
     }
@@ -185,10 +181,6 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
                 .position(new LatLng(lat, lng)).title(mLocation.getText().toString()));
         marker.showInfoWindow();
         marker.getTitle();
-
-
-
-
 
         goToLocation(lat, lng, DEFAULTZOOM);
     }

@@ -36,7 +36,6 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="80dp"
-        android:entries="@array/friends_list"
         android:background="@android:drawable/btn_dropdown"
 
 

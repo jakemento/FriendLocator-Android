@@ -17,4 +17,5 @@ public class Constants {
 
     public static final String FIREBASE_LOCATION_SAVED_LOCATION = "savedLocation";
     public static final String FIREBASE_URL_SAVED_LOCATION = FIREBASE_URL + "/" + FIREBASE_LOCATION_SAVED_LOCATION;
+
 }
