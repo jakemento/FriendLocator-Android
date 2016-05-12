@@ -42,6 +42,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -57,6 +58,8 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
     private static final float DEFAULTZOOM = 15;
     private CameraUpdate update;
     private String inputLocation;
+    Geocoder geocoder;
+    List<Address> addresses;
     private UiSettings mUiSettings;
     @Bind(R.id.saveButton) Button mSaveButton;
     @Bind(R.id.location) EditText mLocation;
@@ -181,6 +184,8 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
         Marker marker = mMap.addMarker(new MarkerOptions()
                 .position(new LatLng(lat, lng)).title(mLocation.getText().toString()));
         marker.showInfoWindow();
+        marker.getTitle();
+
 
 
 
@@ -203,10 +208,22 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
             double lng = point.longitude;
             newLat = lat;
             newLong = lng;
-        Marker marker = mMap.addMarker(new MarkerOptions()
-                .position(new LatLng(lat, lng)));
-                marker.showInfoWindow();
+
             isMapClicked = false;
+
+            geocoder = new Geocoder(this, Locale.getDefault());
+            try {
+                addresses = geocoder.getFromLocation(lat, lng, 1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            String address = addresses.get(0).getAddressLine(0);
+
+            Marker marker = mMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(lat, lng)));
+            marker.showInfoWindow();
+            marker.setTitle(address);
+
         }
     }
 }
