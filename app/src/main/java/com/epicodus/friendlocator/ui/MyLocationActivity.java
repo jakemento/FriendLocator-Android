@@ -76,6 +76,7 @@ public class MyLocationActivity extends AppCompatActivity implements View.OnClic
 
             if (v == mSaveToFavorites) {
                 addData(mAddress.getText().toString());
+                mAddress.setText("");
 
 
                 Toast notifySaved = Toast.makeText(getApplicationContext(), "Location Saved!", Toast.LENGTH_SHORT);
