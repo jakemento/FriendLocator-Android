@@ -4,6 +4,7 @@ package com.epicodus.friendlocator.models;
  * Created by jakemento on 5/8/16.
  */
 
+
 public class User {
     private String name;
     private String email;

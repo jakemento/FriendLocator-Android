@@ -49,6 +49,7 @@ public class MyLocationActivity extends AppCompatActivity implements View.OnClic
     private Location mLocation;
     private Query mQuery;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,23 +84,44 @@ public class MyLocationActivity extends AppCompatActivity implements View.OnClic
             }
         });
 
-
         mSavedLocationRef.addValueEventListener(new ValueEventListener() {
             @Override
+            public void onDataChange(DataSnapshot usersSnapshot) {
+                for (DataSnapshot userSnapshot : usersSnapshot.getChildren()) {
+                    Location location = userSnapshot.getValue(Location.class);
+                    favoritePlaces.add(location.getAddress());
 
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String locations = dataSnapshot.getValue().toString();
-                favoritePlaces.add(locations);
 
-
-
+                }
             }
 
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
 
-            }
+                @Override
+                public void onCancelled(FirebaseError firebaseError) { }
         });
+
+
+
+
+//        mSavedLocationRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//
+//            public void onDataChange(DataSnapshot snapshot) {
+//                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+//                    Location location = postSnapshot.getValue(Location.class);
+//                    String newLocation = location.getAddress();
+//                   favoritePlaces.add(newLocation);
+//                }
+//
+//
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(FirebaseError firebaseError) {
+//
+//            }
+//        });
 
     }
 
