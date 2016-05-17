@@ -32,6 +32,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+
 public class MyLocationActivity extends AppCompatActivity implements View.OnClickListener {
     private Firebase mSavedLocationRef;
 
@@ -61,7 +62,7 @@ public class MyLocationActivity extends AppCompatActivity implements View.OnClic
         mFavoritesList.setAdapter(adapter);
 //
 //        this.retrieveData();
-        Firebase.setAndroidContext(this);
+//        Firebase.setAndroidContext(this);
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         setUpFirebaseQuery();
@@ -84,45 +85,33 @@ public class MyLocationActivity extends AppCompatActivity implements View.OnClic
             }
         });
 
-        mSavedLocationRef.addValueEventListener(new ValueEventListener() {
+        mSavedLocationRef.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot usersSnapshot) {
-                for (DataSnapshot userSnapshot : usersSnapshot.getChildren()) {
-                    Location location = userSnapshot.getValue(Location.class);
-                    favoritePlaces.add(location.getAddress());
-
-
-                }
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Location location = dataSnapshot.getValue(Location.class);
+                favoritePlaces.add(location.toString());
             }
 
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
-                @Override
-                public void onCancelled(FirebaseError firebaseError) { }
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
         });
-
-
-
-
-//        mSavedLocationRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//
-//            public void onDataChange(DataSnapshot snapshot) {
-//                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
-//                    Location location = postSnapshot.getValue(Location.class);
-//                    String newLocation = location.getAddress();
-//                   favoritePlaces.add(newLocation);
-//                }
-//
-//
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(FirebaseError firebaseError) {
-//
-//            }
-//        });
-
     }
 
 
@@ -146,7 +135,7 @@ public class MyLocationActivity extends AppCompatActivity implements View.OnClic
             Firebase userRestaurantsFirebaseRef = new Firebase(Constants.FIREBASE_URL_SAVED_LOCATION).child(userUid);
             Firebase pushRef = userRestaurantsFirebaseRef.push();
             String locationPushId = pushRef.getKey();
-            mLocation.setPushId(locationPushId);
+//            mLocation.setPushId(locationPushId);
 
             pushRef.setValue(mLocation);
 
@@ -219,4 +208,6 @@ public class MyLocationActivity extends AppCompatActivity implements View.OnClic
 //            mFavoritesList.setAdapter(adapter);
 //        }
 //    }
+
+
 
