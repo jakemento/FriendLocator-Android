@@ -1,10 +1,12 @@
 package com.epicodus.friendlocator.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -75,6 +77,9 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
     boolean isMapClicked = false;
     private Firebase mSavedLocationRef;
     @Bind(R.id.satelliteView) ImageView mSatelliteView;
+    private SharedPreferences mSharedPreferences;
+    @Bind(R.id.savedLocationsButton) Button mSavedLocationButton;
+
     private ArrayList<String> favoritePlaces = new ArrayList<String>();
 
 
@@ -99,6 +104,9 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
         mMarkerIcon.setOnClickListener(this);
         mSatelliteView.setOnClickListener(this);
         mToggleTerrain.setOnClickListener(this);
+        mSavedLocationButton.setOnClickListener(this);
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
         mSavedLocationRef = new Firebase(Constants.FIREBASE_URL_SAVED_LOCATION);
 
         Firebase.setAndroidContext(this);
@@ -121,13 +129,18 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
 
     @Override
         public void onClick(View v ) {
-        if (v == mSaveButton) {
-            addData(mLocation.getText().toString());
+        if (v == mSaveButton) { String address = mLocation.getText().toString();
+            String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
+            Firebase userRestaurantsFirebaseRef = new Firebase(Constants.FIREBASE_URL_SAVED_LOCATION).child(userUid);
+            Firebase pushRef = userRestaurantsFirebaseRef.push(); Location location = new Location(address);
+
+            pushRef.setValue(location);
+
+            mLocation.setText("");
 
             Toast notifySaved = Toast.makeText(getApplicationContext(), "Location Saved!", Toast.LENGTH_SHORT);
-            notifySaved.setGravity(Gravity.RELATIVE_HORIZONTAL_GRAVITY_MASK| Gravity.CENTER_HORIZONTAL, 0, 0);
-            notifySaved.show();
-        }
+            notifySaved.setGravity(Gravity.RELATIVE_HORIZONTAL_GRAVITY_MASK | Gravity.CENTER_HORIZONTAL, 0, 0);
+            notifySaved.show(); }
 
         if(v ==mSatelliteView) {
             mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
@@ -137,6 +150,10 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
         }
         if(v ==mMarkerIcon) {
             isMapClicked = true;
+        }
+        if(v == mSavedLocationButton) {
+            Intent intent = new Intent(LocationDetailsActivity.this, MyLocationActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -187,14 +204,6 @@ public class LocationDetailsActivity extends FragmentActivity implements OnMapRe
         marker.getTitle();
 
         goToLocation(lat, lng, DEFAULTZOOM);
-    }
-
-
-    private void addData(String address) {
-        Location location = new Location();
-        location.setAddress(address);
-
-        mSavedLocationRef.child("savedLocation").push().setValue(location);
     }
 
     @Override

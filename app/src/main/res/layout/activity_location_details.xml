@@ -69,6 +69,15 @@
             android:layout_toEndOf="@+id/toggleTerrain"
             android:background="@drawable/marker"
             android:onClick="geoLocate"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Saved Locals"
+            android:id="@+id/savedLocationsButton"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/markerIcon"
+            android:layout_toEndOf="@+id/markerIcon" />
     </RelativeLayout>
 
 

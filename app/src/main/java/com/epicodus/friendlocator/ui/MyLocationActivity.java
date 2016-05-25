@@ -88,8 +88,10 @@ public class MyLocationActivity extends AppCompatActivity implements View.OnClic
         mSavedLocationRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Location location = dataSnapshot.getValue(Location.class);
-                favoritePlaces.add(location.toString());
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String address = snapshot.getValue(Location.class).getAddress();
+                    favoritePlaces.add(address);
+                }
             }
 
             @Override
@@ -126,27 +128,21 @@ public class MyLocationActivity extends AppCompatActivity implements View.OnClic
             startActivity(nameAddressIntent);
         }
 
-        if (v == mSaveToFavorites) {
-            addData(mAddress.getText().toString());
-            mAddress.setText("");
-
+        if (v == mSaveToFavorites) { String address = mAddress.getText().toString();
             String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
-
             Firebase userRestaurantsFirebaseRef = new Firebase(Constants.FIREBASE_URL_SAVED_LOCATION).child(userUid);
-            Firebase pushRef = userRestaurantsFirebaseRef.push();
-            String locationPushId = pushRef.getKey();
-//            mLocation.setPushId(locationPushId);
+            Firebase pushRef = userRestaurantsFirebaseRef.push(); Location location = new Location(address);
 
-            pushRef.setValue(mLocation);
+            pushRef.setValue(location);
 
+            mAddress.setText("");
 
             Toast notifySaved = Toast.makeText(getApplicationContext(), "Location Saved!", Toast.LENGTH_SHORT);
             notifySaved.setGravity(Gravity.RELATIVE_HORIZONTAL_GRAVITY_MASK | Gravity.CENTER_HORIZONTAL, 0, 0);
-            notifySaved.show();
+            notifySaved.show(); }
 
 
         }
-    }
 
     private void setUpFirebaseQuery() {
         String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
